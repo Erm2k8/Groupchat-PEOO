@@ -1,7 +1,6 @@
 from typing import List
 from enum import IntFlag
 
-# Definindo as permissões com IntFlag
 class Permission(IntFlag):
     read_messages = 1        # 000001
     send_messages = 2        # 000010
@@ -98,7 +97,7 @@ class Member:
             id=data.get('id', 0),
             group_id=data.get('group_id', 0),
             user_id=data.get('user_id', 0),
-            permissions=Permission(data.get('permissions', 0))  # Garantir que as permissões sejam passadas corretamente
+            permissions=Permission(data.get('permissions', 0)) 
         )
 
     def __str__(self) -> str:
