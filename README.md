@@ -14,10 +14,3 @@
     <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Skull%20and%20Crossbones.png" alt="Skull and Crossbones" width="100" height="100" />
     <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Tired%20Face.png" alt="Tired Face" width="100" height="100" />
 </div>
-
-<style>
-    h1, h2, h3 {
-        color: yellow;
-        filter: drop-shadow(2px 2px red);
-    }
-</style>
