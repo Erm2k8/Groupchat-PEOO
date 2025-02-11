@@ -5,14 +5,20 @@ class ModelDAO:
     objects: list[Any] = []
     path: str = ""
     model: Type[Any] = None
+    _next_id: int = 1
 
     @classmethod
     def open(cls) -> None:
         try:
             with open(cls.path, "r") as data:
                 cls.objects = [cls.model.from_dict(o) for o in json.load(data)]
+                if cls.objects:
+                    cls._next_id = max(obj.id for obj in cls.objects) + 1
+                else:
+                    cls._next_id = 1
         except (FileNotFoundError, json.JSONDecodeError):
             cls.objects = []
+            cls._next_id = 1
 
     @classmethod
     def save(cls) -> None:
@@ -25,6 +31,9 @@ class ModelDAO:
     @classmethod
     def create(cls, obj: Any) -> None:
         cls.open()
+        if not hasattr(obj, "id") or obj.id == 0:
+            obj.id = cls._next_id
+            cls._next_id += 1
         cls.objects.append(obj)
         cls.save()
 
