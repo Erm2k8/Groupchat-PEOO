@@ -6,24 +6,6 @@
         "password": "password3"
     },
     {
-        "id": 4,
-        "username": "user1",
-        "email": "email1@example.com",
-        "password": "password1"
-    },
-    {
-        "id": 5,
-        "username": "user2",
-        "email": "email2@example.com",
-        "password": "password2"
-    },
-    {
-        "id": 6,
-        "username": "user3",
-        "email": "email3@example.com",
-        "password": "password3"
-    },
-    {
         "id": 1,
         "username": "updated_user1",
         "email": "email1@example.com",

@@ -14,7 +14,7 @@ def test_read_all():
         print(user)
 
 def test_get_by_id():
-    user = UserDAO.get_by_id(4)
+    user = UserDAO.get_by_id(3)
     print("Usuário encontrado:", user if user else "Nenhum usuário com esse ID.")
 
 def test_update():
@@ -31,10 +31,10 @@ def test_delete():
     print("Usuário com ID 2 deletado.")
 
 if __name__ == "__main__":
-    # test_create()
-    # test_read_all()
-    # test_get_by_id()
-    # test_update()
-    # test_read_all()
+    test_create()
+    test_read_all()
+    test_get_by_id()
+    test_update()
+    test_read_all()
     test_delete()
     test_read_all()
