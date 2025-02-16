@@ -1,1 +1,14 @@
-[]
+[
+    {
+        "id": 1,
+        "group_name": "Grupo A",
+        "members": [],
+        "description": "Descrição do grupo A"
+    },
+    {
+        "id": 2,
+        "group_name": "Grupo B",
+        "members": [],
+        "description": "Descrição do grupo B"
+    }
+]

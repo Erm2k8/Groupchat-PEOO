@@ -10,5 +10,23 @@
         "username": "updated_user1",
         "email": "email1@example.com",
         "password": "password1"
+    },
+    {
+        "id": 4,
+        "username": "erm2k8",
+        "email": "erm@email",
+        "password": "123"
+    },
+    {
+        "id": 5,
+        "username": "banana",
+        "email": "banana@email",
+        "password": "banana123"
+    },
+    {
+        "id": 6,
+        "username": "morango",
+        "email": "morango@email",
+        "password": "1234"
     }
 ]
