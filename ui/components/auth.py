@@ -1,6 +1,7 @@
 import streamlit as st
 from views.views import View
 from models.admin import Admin
+import uuid
 
 class Auth:
     @staticmethod    
@@ -58,7 +59,10 @@ class Auth:
     @staticmethod
     def render_logout_button():
         if "authenticated" in st.session_state and st.session_state.authenticated:
-            if st.button("Logout"):
+            logout_key = str(uuid.uuid4())
+            if st.button("Logout", key=logout_key):
+                from ..scripts import Scripts
+                Scripts.popup_render()
                 st.session_state.clear()
                 st.success("Logged out successfully!")
                 st.rerun()
@@ -75,10 +79,14 @@ class Auth:
             Auth.render_logout_button()
         else:
             with col2:
-                page = st.selectbox("Choose action", ["Login", "Register", "Admin"])
-                if page == "Login":
-                    Auth.render_login_form()
-                elif page == "Register":
-                    Auth.render_register_form()
-                elif page == "Admin":
-                    Auth.render_admin_page()
+                if Auth.is_authenticated():
+                    Auth.render_logout_button()
+                else:
+                    auth_type = st.selectbox("Login or Register", ["Login", "Register", "Admin"])
+                    if auth_type == "Login":
+                        Auth.render_login_form()
+                    elif auth_type == "Register":
+                        Auth.render_register_form()
+                    elif auth_type == "Admin":
+                        Auth.render_admin_page()
+

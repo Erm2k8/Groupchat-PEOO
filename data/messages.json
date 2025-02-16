@@ -1,1 +1,51 @@
-[]
+[
+    {
+        "id": 1,
+        "content": "AAAAAAAAAAAA",
+        "timestamp": "2025-02-16 10:50:41",
+        "sender_id": 4,
+        "group_id": 1
+    },
+    {
+        "id": 2,
+        "content": "aa",
+        "timestamp": "2025-02-16 10:50:44",
+        "sender_id": 4,
+        "group_id": 1
+    },
+    {
+        "id": 3,
+        "content": "a",
+        "timestamp": "2025-02-16 10:50:44",
+        "sender_id": 4,
+        "group_id": 1
+    },
+    {
+        "id": 4,
+        "content": "a",
+        "timestamp": "2025-02-16 10:50:45",
+        "sender_id": 4,
+        "group_id": 1
+    },
+    {
+        "id": 5,
+        "content": "a",
+        "timestamp": "2025-02-16 10:50:45",
+        "sender_id": 4,
+        "group_id": 1
+    },
+    {
+        "id": 6,
+        "content": "a",
+        "timestamp": "2025-02-16 10:50:46",
+        "sender_id": 4,
+        "group_id": 1
+    },
+    {
+        "id": 7,
+        "content": "KKKKK FUNCIONA NEM ACREDITO",
+        "timestamp": "2025-02-16 10:50:53",
+        "sender_id": 4,
+        "group_id": 1
+    }
+]

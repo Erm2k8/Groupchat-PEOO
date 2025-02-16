@@ -36,6 +36,24 @@ class View:
     @staticmethod
     def get_user_by_id(id):
         return UserDAO.get_by_id(id)
+    
+    @staticmethod
+    def get_user_by_email(email):
+        for user in UserDAO.read_all():
+            if user.email == email:
+                return user
+        return None
+
+    @staticmethod
+    def get_user_by_name(name):
+        for user in UserDAO.read_all():
+            if user.username == name:
+                return user
+        return None
+
+    @staticmethod
+    def list_users():
+        return UserDAO.read_all()
 
     @staticmethod
     def list_groups():
@@ -53,13 +71,15 @@ class View:
         return GroupDAO.get_by_id(id)
 
     @staticmethod
-    def create_group(name, description):
-        group = Group(0, name, description)
+    def create_group(name, description, list_members = []):
+        group = Group(0, name, [], description)
         GroupDAO.create(group)
+        group.members = [m for m in View.read_all_members() if m.group_id == group.id]
+        GroupDAO.update(group) 
 
     @staticmethod
     def update_group(id, name, description):
-        group = Group(id, name, description)
+        group = Group(id, name, View.get_members_by_group(id), description)
         GroupDAO.update(group)
 
     @staticmethod
@@ -67,9 +87,19 @@ class View:
         GroupDAO.delete(id)
 
     @staticmethod
+    def read_all_members():
+        return MemberDAO.read_all()
+
+    @staticmethod
     def add_member(group_id, user_id, permissions):
-        member = Member(0, group_id, user_id, permissions)
-        MemberDAO.create(member)
+        group = View.get_group_by_id(group_id)
+        if not group:
+            raise ValueError(f"Group with ID {group_id} not found.")
+        
+        member = Member(0, group_id=group_id, user_id=user_id, permissions=permissions)
+        MemberDAO.create(member) 
+        group.members.append(member) 
+        GroupDAO.update(group)  
 
     @staticmethod
     def remove_member(group_id, user_id):
@@ -78,6 +108,13 @@ class View:
                 MemberDAO.delete(member.id)
                 break
 
+        group = View.get_group_by_id(group_id)
+        if not group:
+            raise ValueError(f"Group with ID {group_id} not found.")
+        
+        group.members = [m for m in group.members if m['user_id'] != user_id]
+        GroupDAO.update(group)
+
     @staticmethod
     def get_members_by_group(group_id):
         return [member for member in MemberDAO.read_all() if member.group_id == group_id]
@@ -85,6 +122,10 @@ class View:
     @staticmethod
     def get_member_by_id(id):
         return MemberDAO.get_by_id(id)
+
+    @staticmethod
+    def list_messages():
+        return MessageDAO.read_all()
 
     @staticmethod
     def get_messages_by_group(group_id):

@@ -10,7 +10,7 @@ class ModelDAO:
     @classmethod
     def open(cls) -> None:
         try:
-            with open(cls.path, "r") as data:
+            with open(cls.path, "r", encoding="utf-8") as data:
                 cls.objects = [cls.model.from_dict(o) for o in json.load(data)]
                 if cls.objects:
                     cls._next_id = max(obj.id for obj in cls.objects) + 1
@@ -23,7 +23,7 @@ class ModelDAO:
     @classmethod
     def save(cls) -> None:
         try:
-            with open(cls.path, "w") as file:
+            with open(cls.path, "w", encoding="utf-8") as file:
                 json.dump(cls.objects, file, default=lambda obj: obj.to_dict(), indent=4)
         except (FileNotFoundError, json.JSONDecodeError):
             pass

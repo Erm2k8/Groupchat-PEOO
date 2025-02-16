@@ -20,5 +20,9 @@ if 'selected_group' not in st.session_state:
 if 'authenticated_is_admin' not in st.session_state:
     st.session_state.authenticated_is_admin = False
 
+if 'admin_selected_page' not in st.session_state:
+    st.session_state.admin_selected_page = None
+
+
 if __name__ == "__main__":
     Index.main()

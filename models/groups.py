@@ -1,5 +1,7 @@
 from typing import List
 
+from models.members import Member
+
 class Group:
     def __init__(self, id: int, group_name: str, members: List['Member'], description: str) -> None:
         self.id = id
