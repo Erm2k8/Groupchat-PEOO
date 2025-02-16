@@ -2,10 +2,12 @@ from models.users import User
 from models.groups import Group
 from models.messages import Message
 from models.members import Member
+from models.notifications import Notification
 from crud.users_dao import UserDAO
 from crud.groups_dao import GroupDAO
 from crud.messages_dao import MessageDAO
 from crud.members_dao import MemberDAO
+from crud.notifications_dao import NotificationDAO
 
 from datetime import datetime
 
@@ -32,6 +34,10 @@ class View:
         UserDAO.delete(id)
 
     @staticmethod
+    def get_user_by_id(id):
+        return UserDAO.get_by_id(id)
+
+    @staticmethod
     def list_groups():
         return GroupDAO.read_all()
 
@@ -43,8 +49,12 @@ class View:
         return None
 
     @staticmethod
+    def get_group_by_id(id: int) -> Group | None:
+        return GroupDAO.get_by_id(id)
+
+    @staticmethod
     def create_group(name, description):
-        group = Group(0, name, [], description)
+        group = Group(0, name, description)
         GroupDAO.create(group)
 
     @staticmethod
@@ -73,8 +83,16 @@ class View:
         return [member for member in MemberDAO.read_all() if member.group_id == group_id]
 
     @staticmethod
+    def get_member_by_id(id):
+        return MemberDAO.get_by_id(id)
+
+    @staticmethod
     def get_messages_by_group(group_id):
         return [message for message in MessageDAO.read_all() if message.group_id == group_id]
+
+    @staticmethod
+    def get_message_by_id(id):
+        return MessageDAO.get_by_id(id)
 
     @staticmethod
     def send_message(group_id, user_id, content):
@@ -82,5 +100,22 @@ class View:
         MessageDAO.create(message)
 
     @staticmethod
+    def delete_message(id):
+        MessageDAO.delete(id)
+
+    @staticmethod
     def leave_group(user_id, group_id):
         View.remove_member(group_id, user_id)
+
+    @staticmethod
+    def get_notifications_for_user(user_id):
+        return [notification for notification in NotificationDAO.read_all() if notification.user_id == user_id]
+
+    @staticmethod
+    def create_notification(user_id, content):
+        notification = Notification(0, user_id, content, datetime.now())
+        NotificationDAO.create(notification)
+
+    @staticmethod
+    def delete_notification(id):
+        NotificationDAO.delete(id)

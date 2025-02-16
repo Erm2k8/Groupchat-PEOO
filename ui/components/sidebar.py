@@ -6,12 +6,14 @@ class Sidebar:
     def render():
         with st.sidebar:
             st.title("TriboPapo")
-            st.button("Discover Tribes", use_container_width=True, type="primary")
+            explore = st.button("Explorar Tribos", use_container_width=True, type="primary")
             st.divider()
             st.write("Your Groups")
             
             groups = View.list_groups()
             
+            if explore:
+                st.session_state.selected_group = "explore"
             if groups:
                 for group in groups:
                     group_button = st.button(group.group_name, use_container_width=True)
