@@ -58,13 +58,11 @@ class Auth:
 
     @staticmethod
     def render_logout_button():
-        if "authenticated" in st.session_state and st.session_state.authenticated:
-            logout_key = str(uuid.uuid4())
-            if st.button("Logout", key=logout_key):
-                from ..scripts import Scripts
-                Scripts.popup_render()
+        if st.session_state.get("authenticated") or st.session_state.get("authenticated_is_admin"):
+
+            if st.button("Logout", key="logout_button"):
                 st.session_state.clear()
-                st.success("Logged out successfully!")
+                st.success("Logout realizado com sucesso!")
                 st.rerun()
 
     @staticmethod
