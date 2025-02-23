@@ -54,12 +54,6 @@
         "permissions": 3
     },
     {
-        "id": 10,
-        "group_id": 8,
-        "user_id": 4,
-        "permissions": 3
-    },
-    {
         "id": 11,
         "group_id": 8,
         "user_id": 8,
@@ -120,15 +114,21 @@
         "permissions": 3
     },
     {
-        "id": 24,
-        "group_id": 3,
-        "user_id": 8,
-        "permissions": 3
-    },
-    {
         "id": 25,
         "group_id": 1,
         "user_id": 4,
+        "permissions": 3
+    },
+    {
+        "id": 26,
+        "group_id": 3,
+        "user_id": 4,
+        "permissions": 3
+    },
+    {
+        "id": 10,
+        "group_id": 7,
+        "user_id": 1,
         "permissions": 3
     }
 ]

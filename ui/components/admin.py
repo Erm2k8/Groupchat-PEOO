@@ -242,21 +242,18 @@ class AdminUI:
     def messages_page():
         create, read, update, delete = st.tabs(["Create", "Read", "Update", "Delete"])
 
-       # Atualiza o estado da lista de usuários assim que o grupo for alterado
         with create:
             groups = View.list_groups()
             if not groups:
                 st.warning("Nenhum grupo disponível.")
                 return  
 
-            # Seleção do grupo
             group_name = st.selectbox(
                 "Group",
                 [group.group_name for group in groups],
                 key="select_group_message"
             )
 
-            # Seleção do grupo e atualização de membros
             selected_group = View.get_group_by_name(group_name)
             group_id = selected_group.id
 
@@ -266,21 +263,17 @@ class AdminUI:
                 st.warning("Nenhum usuário disponível para este grupo.")
                 return  
 
-            # Atualiza a lista de usuários com base no grupo selecionado
             user_name = st.selectbox(
                 "User",
                 [View.get_user_by_id(user.user_id).username for user in members],
                 key="select_user_message"
             )
 
-            # Seleção do usuário
             selected_user = View.get_user_by_name(user_name)
             user_id = selected_user.id
 
-            # Entrada de conteúdo
             content = st.text_input("Content", key="create_content")
 
-            # Ação de envio
             if st.button("Create"):
                 if not content.strip():
                     st.error("A mensagem não pode estar vazia.")
@@ -304,15 +297,15 @@ class AdminUI:
                     if message:
                         st.success(f"""
                                    Content: {message.content}\n
-                                   Date: {message.date}
+                                   Date: {message.timestamp}
                             """)
                     else:
                         st.warning("Message not found.")
 
             messages = View.list_messages()
             if messages:
-                messages = [{"ID": message.id, "Content": message.content, "Date": message.timestamp} for message in messages]
-            df = pd.DataFrame(messages, columns=["ID", "Content", "Date"])
+                messages = [{"ID": message.id, "Content": message.content, "Sender": View.get_user_by_id(message.sender_id).username, "Group": View.get_group_by_id(message.group_id).group_name, "Date": message.timestamp} for message in messages]
+            df = pd.DataFrame(messages, columns=["ID", "Content", "Sender", "Group", "Date"])
             st.dataframe(df, use_container_width=True, hide_index=True)
 
         with update:
@@ -324,11 +317,15 @@ class AdminUI:
                 format="%d"
             )
             if View.get_message_by_id(id):
+                with st.container(border=True):
+                    st.write(f"Mensagem antiga: {View.get_message_by_id(id).content}")
+
                 content = st.text_input(
-                    "New content",
+                    "Nova mensagem",
                     key="update_content",
                     value=View.get_message_by_id(id).content
                 )
+
                 if st.button("Update"):
                     View.update_message(id, content)
                     st.success("Message updated!")
@@ -343,6 +340,14 @@ class AdminUI:
                 step=1,
                 format="%d"
             )
+            content = View.get_message_by_id(id)
+
+            if content:
+                with st.container(border=True):
+                    st.write(f"Content: {content.content}")
+            else:
+                st.warning("Message not found.")
+
             if st.button("Delete"):
                 View.delete_message(id)
                 st.success("Message deleted!")
@@ -351,4 +356,174 @@ class AdminUI:
 
     @staticmethod
     def members_page():
-        pass
+        create, read, update, delete = st.tabs(["Create", "Read", "Update", "Delete"])
+
+        with create:
+            groups = View.list_groups()
+            if not groups:
+                st.warning("Nenhum grupo disponível.")
+                return  
+
+            group_name = st.selectbox(
+                "Group",
+                [group.group_name for group in groups],
+                key="select_group_member"
+            )
+
+            new_member = st.selectbox(
+                "User",
+                [View.get_user_by_id(user.id).username for user in View.list_users()],
+                key="select_user_member"
+            )
+
+            group_id = View.get_group_by_name(group_name).id
+            new_member_id = View.get_user_by_name(new_member).id
+
+            if st.button("Create"):
+                View.add_member(group_id, new_member_id, Permission.read_messages | Permission.send_messages)
+                st.success("Member added!")
+                sleep(2)
+                st.rerun()
+
+        with read:
+            search_id = st.number_input(
+                "Search by ID",
+                key="search_member_id",
+                min_value=0,
+                step=1,
+                format="%d"
+            )
+            if st.button("Buscar"):
+                member = View.get_member_by_id(int(search_id))
+                with st.container(border=True):
+                    if member:
+                        group = View.get_group_by_id(member.group_id)
+                        if group:
+                            st.success(f"""
+                                User: {View.get_user_by_id(member.user_id).username}\n
+                                Group: {group.group_name}
+                            """)
+                        else:
+                            st.warning("O grupo associado ao membro não foi encontrado.")
+                    else:
+                        st.warning("Membro não encontrado.")
+
+            members = View.list_members()
+
+            if members:
+                member_data = []
+                for member in members:
+                    user = View.get_user_by_id(member.user_id)
+                    group = View.get_group_by_id(member.group_id) if member.group_id else None
+
+                    member_data.append({
+                        "ID": member.id,
+                        "User": user.username if user else "Usuário não encontrado",
+                        "Group": group.group_name if group else "Grupo não encontrado",
+                        "Permission": [perm.name for perm in Permission if perm in member.permissions]
+
+                    })
+
+                df = pd.DataFrame(member_data, columns=["ID", "User", "Group", "Permission"])
+                st.dataframe(df, use_container_width=True, hide_index=True)
+            else:
+                st.warning("Nenhum membro encontrado.")
+
+        with update:
+            id = st.number_input(
+                "ID",
+                key="update_member_id",
+                min_value=0,
+                step=1,
+                format="%d"
+            )
+
+            member = View.get_member_by_id(id)
+
+            if member:
+                user = View.get_user_by_id(member.user_id)
+                group = View.get_group_by_id(member.group_id) if member.group_id else None
+
+                with st.container(border=True):
+                    st.write(f"ID: {member.id}")
+                    st.write(f"User: {user.username if user else 'Usuário não encontrado'}")
+                    st.write(f"Group: {group.group_name if group else 'Grupo não encontrado'}")
+
+                user_name = st.selectbox(
+                    "User",
+                    [View.get_user_by_id(user.id).username for user in View.list_users()],
+                    key="select_user_member_update"
+                )
+
+                group_name = st.selectbox(
+                    "Group",
+                    [group.group_name for group in View.list_groups()],
+                    key="select_group_member_update"
+                )
+
+                current_permissions = member.permissions if member.permissions else Permission(0)  # Caso não tenha permissões
+                selected_permissions = st.multiselect(
+                    "Permissions",
+                    [perm.name for perm in Permission],
+                    default=[perm.name for perm in Permission if perm in current_permissions],
+                    key="select_permissions_member_update"
+                )
+
+                if st.button("Update"):
+                    user_id = View.get_user_by_name(user_name).id
+                    group_id = View.get_group_by_name(group_name).id if group_name else None
+
+                    # Combina todas as permissões selecionadas em um único valor
+                    permissions = Permission(0)  # Inicializa com nenhuma permissão
+                    for perm in selected_permissions:
+                        permissions |= getattr(Permission, perm)
+
+                    View.update_member(id, user_id, group_id, permissions)
+                    st.success("Member updated!")
+                    sleep(2)
+                    st.rerun()
+            else:
+                st.warning("Member not found.")
+
+        with delete:
+            groups = View.list_groups()
+    
+            if not groups:
+                st.warning("Nenhum grupo disponível.")
+            else:
+                group_name = st.selectbox(
+                    "Group",
+                    [group.group_name for group in groups],
+                    key="select_group_member_delete"
+                )
+
+                selected_group = View.get_group_by_name(group_name)
+                group_id = selected_group.id if selected_group else None
+
+                members = View.get_members_by_group(group_id) if group_id else []
+
+                if not members:
+                    st.warning("Nenhum usuário disponível para este grupo.")
+                else:
+                    user_name = st.selectbox(
+                        "User",
+                        [View.get_user_by_id(member.user_id).username for member in members],
+                        key="select_user_member_delete"
+                    )
+
+                    selected_user = View.get_user_by_name(user_name)
+                    user_id = selected_user.id if selected_user else None
+
+                    if st.button("Delete"):
+                        member = View.get_member_by_user_and_group(user_id, group_id)
+                        
+                        if member:
+                            View.delete_member(member.id)
+                            st.success("Member deleted!")
+                            sleep(2)
+                            st.rerun()
+                        else:
+                            st.error("Membro não encontrado para este grupo.")
+
+
+

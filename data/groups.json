@@ -1,5 +1,18 @@
 [
     {
+        "id": 1,
+        "group_name": "Grupo Teste",
+        "members": [
+            {
+                "id": 25,
+                "group_id": 1,
+                "user_id": 4,
+                "permissions": 3
+            }
+        ],
+        "description": "Descricao legal"
+    },
+    {
         "id": 3,
         "group_name": "Grupo paia",
         "members": [
@@ -20,21 +33,14 @@
                 "group_id": 3,
                 "user_id": 8,
                 "permissions": 3
-            }
-        ],
-        "description": "paia demaize"
-    },
-    {
-        "id": 1,
-        "group_name": "Grupo Teste",
-        "members": [
+            },
             {
-                "id": 25,
-                "group_id": 1,
+                "id": 26,
+                "group_id": 3,
                 "user_id": 4,
                 "permissions": 3
             }
         ],
-        "description": "Descricao legal"
+        "description": "paia demaize"
     }
 ]

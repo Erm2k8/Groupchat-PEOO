@@ -151,4 +151,25 @@ class View:
         message = MessageDAO.get_by_id(id)
         message.content = content
         MessageDAO.update(message)
-        
+    
+    @staticmethod
+    def list_members():
+        return MemberDAO.read_all()
+    
+    @staticmethod
+    def update_member(id, group_id, user_id, permissions):
+        member = MemberDAO.get_by_id(id)
+        member.group_id = group_id
+        member.user_id = user_id
+        member.permissions = permissions
+        MemberDAO.update(member)
+
+    @staticmethod
+    def delete_member(id):
+        MemberDAO.delete(id)
+    
+    @staticmethod
+    def get_member_by_user_and_group(user_id, group_id):
+        for member in MemberDAO.read_all():
+            if member.group_id == group_id and member.user_id == user_id:
+                return member
