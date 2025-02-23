@@ -28,13 +28,6 @@
         "group_id": 1
     },
     {
-        "id": 5,
-        "content": "a",
-        "timestamp": "2025-02-16 10:50:45",
-        "sender_id": 4,
-        "group_id": 1
-    },
-    {
         "id": 6,
         "content": "a",
         "timestamp": "2025-02-16 10:50:46",
@@ -159,5 +152,47 @@
         "timestamp": "2025-02-17 08:53:49",
         "sender_id": 7,
         "group_id": 3
+    },
+    {
+        "id": 24,
+        "content": "feagouisaif",
+        "timestamp": "2025-02-23 18:09:17",
+        "sender_id": 7,
+        "group_id": 3
+    },
+    {
+        "id": 25,
+        "content": "ioedg",
+        "timestamp": "2025-02-23 18:09:18",
+        "sender_id": 7,
+        "group_id": 3
+    },
+    {
+        "id": 26,
+        "content": "MENSAGEM HAHAHA\n",
+        "timestamp": "2025-02-23 18:09:24",
+        "sender_id": 7,
+        "group_id": 3
+    },
+    {
+        "id": 27,
+        "content": "dddddddddddddddd",
+        "timestamp": "2025-02-23 18:14:46",
+        "sender_id": 5,
+        "group_id": 3
+    },
+    {
+        "id": 28,
+        "content": "dddddddddddddddd",
+        "timestamp": "2025-02-23 18:15:53",
+        "sender_id": 5,
+        "group_id": 3
+    },
+    {
+        "id": 5,
+        "content": "Mensagem atualizada",
+        "timestamp": "2025-02-16 10:50:45",
+        "sender_id": 4,
+        "group_id": 1
     }
 ]

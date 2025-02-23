@@ -2,12 +2,10 @@ from models.users import User
 from models.groups import Group
 from models.messages import Message
 from models.members import Member
-from models.notifications import Notification
 from crud.users_dao import UserDAO
 from crud.groups_dao import GroupDAO
 from crud.messages_dao import MessageDAO
 from crud.members_dao import MemberDAO
-from crud.notifications_dao import NotificationDAO
 
 from datetime import datetime
 
@@ -149,14 +147,8 @@ class View:
         View.remove_member(group_id, user_id)
 
     @staticmethod
-    def get_notifications_for_user(user_id):
-        return [notification for notification in NotificationDAO.read_all() if notification.user_id == user_id]
-
-    @staticmethod
-    def create_notification(user_id, content):
-        notification = Notification(0, user_id, content, datetime.now())
-        NotificationDAO.create(notification)
-
-    @staticmethod
-    def delete_notification(id):
-        NotificationDAO.delete(id)
+    def update_message(id, content):
+        message = MessageDAO.get_by_id(id)
+        message.content = content
+        MessageDAO.update(message)
+        

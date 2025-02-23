@@ -5,6 +5,7 @@ import pandas as pd
 from ..styles import Style
 from time import sleep
 from models.members import Permission
+from datetime import datetime
 
 class AdminUI:
     @staticmethod
@@ -22,7 +23,6 @@ class AdminUI:
                     "Usuários",
                     "Grupos",
                     "Mensagens",
-                    "Notificações",
                     "Membros"
                 ],
                 key="admin_page"
@@ -242,38 +242,45 @@ class AdminUI:
     def messages_page():
         create, read, update, delete = st.tabs(["Create", "Read", "Update", "Delete"])
 
+       # Atualiza o estado da lista de usuários assim que o grupo for alterado
         with create:
             groups = View.list_groups()
-            st.write("Groups:", [group for group in View.list_groups()])
             if not groups:
                 st.warning("Nenhum grupo disponível.")
                 return  
 
+            # Seleção do grupo
             group_name = st.selectbox(
                 "Group",
                 [group.group_name for group in groups],
-                key="select_group_message"  # Key única
+                key="select_group_message"
             )
 
+            # Seleção do grupo e atualização de membros
             selected_group = View.get_group_by_name(group_name)
             group_id = selected_group.id
 
             members = View.get_members_by_group(group_id)
+                
             if not members:
                 st.warning("Nenhum usuário disponível para este grupo.")
                 return  
 
+            # Atualiza a lista de usuários com base no grupo selecionado
             user_name = st.selectbox(
                 "User",
-                [user.username for user in members],
-                key="select_user_message"  # Key única
+                [View.get_user_by_id(user.user_id).username for user in members],
+                key="select_user_message"
             )
 
+            # Seleção do usuário
             selected_user = View.get_user_by_name(user_name)
             user_id = selected_user.id
 
+            # Entrada de conteúdo
             content = st.text_input("Content", key="create_content")
 
+            # Ação de envio
             if st.button("Create"):
                 if not content.strip():
                     st.error("A mensagem não pode estar vazia.")
@@ -341,10 +348,6 @@ class AdminUI:
                 st.success("Message deleted!")
                 sleep(2)
                 st.rerun()
-
-    @staticmethod
-    def notifications_page():
-        pass
 
     @staticmethod
     def members_page():
