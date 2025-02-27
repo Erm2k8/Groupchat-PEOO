@@ -54,5 +54,96 @@
         "timestamp": "2025-02-27 14:34:19",
         "sender_id": 1,
         "group_id": 1
+    },
+    {
+        "id": 9,
+        "content": "oi",
+        "timestamp": "2025-02-27 14:37:56",
+        "sender_id": 4,
+        "group_id": 1
+    },
+    {
+        "id": 10,
+        "content": "oie",
+        "timestamp": "2025-02-27 14:38:17",
+        "sender_id": 1,
+        "group_id": 1
+    },
+    {
+        "id": 11,
+        "content": "como vc t\u00e1?",
+        "timestamp": "2025-02-27 14:38:21",
+        "sender_id": 4,
+        "group_id": 1
+    },
+    {
+        "id": 12,
+        "content": "estou bem e voc~e",
+        "timestamp": "2025-02-27 14:38:27",
+        "sender_id": 1,
+        "group_id": 1
+    },
+    {
+        "id": 13,
+        "content": "eai men",
+        "timestamp": "2025-02-27 14:40:57",
+        "sender_id": 4,
+        "group_id": 1
+    },
+    {
+        "id": 14,
+        "content": "s\u00f3 um crudzin mb\u00e1sico",
+        "timestamp": "2025-02-27 14:41:05",
+        "sender_id": 3,
+        "group_id": 1
+    },
+    {
+        "id": 15,
+        "content": "GILBERTOOOO",
+        "timestamp": "2025-02-27 14:41:11",
+        "sender_id": 4,
+        "group_id": 1
+    },
+    {
+        "id": 16,
+        "content": "DIVOOO",
+        "timestamp": "2025-02-27 14:41:13",
+        "sender_id": 4,
+        "group_id": 1
+    },
+    {
+        "id": 17,
+        "content": "\u00e9 o streamlit",
+        "timestamp": "2025-02-27 14:41:18",
+        "sender_id": 3,
+        "group_id": 1
+    },
+    {
+        "id": 18,
+        "content": "hahaha",
+        "timestamp": "2025-02-27 14:41:22",
+        "sender_id": 3,
+        "group_id": 1
+    },
+    {
+        "id": 19,
+        "content": "projeto",
+        "timestamp": "2025-02-27 14:41:24",
+        "sender_id": 3,
+        "group_id": 1
+    },
+    {
+        "id": 20,
+        "content": "INTERGERADOR\n",
+        "timestamp": "2025-02-27 14:41:28",
+        "sender_id": 4,
+        "group_id": 1
+    },
+    {
+        "id": 21,
+        "content": "T\u00d4 NO CELULAR",
+        "timestamp": "2025-02-27 14:42:53",
+        "sender_id": 1,
+        "group_id": 1
     }
 ]

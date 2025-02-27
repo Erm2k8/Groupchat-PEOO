@@ -1,12 +1,18 @@
 import streamlit as st
 from views.views import View
+from ui.components.group 
 
 class Sidebar:
     @staticmethod
     def render():
         with st.sidebar:
             st.title("TriboPapo")
-            explore = st.button("Explorar Tribos", use_container_width=True, type="primary")
+            explore = st.button("Explorar Tribos", use_container_width=True, type="primary", icon="🌎")
+            create_group = st.button("Criar Grupo", use_container_width=True, type="secondary", icon="➕")
+
+            if create_group:
+                ...
+
             st.divider()
             st.write("Your Groups")
             
