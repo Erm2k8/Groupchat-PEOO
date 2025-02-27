@@ -33,5 +33,26 @@
         "timestamp": "2025-02-27 09:56:18",
         "sender_id": 1,
         "group_id": 1
+    },
+    {
+        "id": 6,
+        "content": "Assim que manda mensagme",
+        "timestamp": "2025-02-27 14:29:52",
+        "sender_id": 1,
+        "group_id": 1
+    },
+    {
+        "id": 7,
+        "content": "aaaaa",
+        "timestamp": "2025-02-27 14:34:10",
+        "sender_id": 2,
+        "group_id": 1
+    },
+    {
+        "id": 8,
+        "content": "sasda",
+        "timestamp": "2025-02-27 14:34:19",
+        "sender_id": 1,
+        "group_id": 1
     }
 ]

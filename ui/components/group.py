@@ -18,6 +18,8 @@ class Groups:
         else:
             st.error("Group not found.")
 
+
+    @st.fragment(run_every="1s")
     @staticmethod
     def render_messages(group):
         messages = View.get_messages_by_group(group.id)
