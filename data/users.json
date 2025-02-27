@@ -1,26 +1,20 @@
 [
     {
-        "id": 5,
-        "username": "banana",
-        "email": "banana@email",
-        "password": "banana123"
-    },
-    {
-        "id": 7,
-        "username": "joao",
-        "email": "joao@email.com",
+        "id": 1,
+        "username": "Ermesson",
+        "email": "erm@email.com",
         "password": "1234"
     },
     {
-        "id": 4,
-        "username": "Erm2k8",
-        "email": "erm@email.com",
-        "password": "0901"
+        "id": 2,
+        "username": "Afonso",
+        "email": "fonso@email.com",
+        "password": "1234"
     },
     {
-        "id": 8,
-        "username": "Maria",
-        "email": "maria123@email.com",
+        "id": 3,
+        "username": "Gilbert",
+        "email": "gil@email.com",
         "password": "1234"
     }
 ]

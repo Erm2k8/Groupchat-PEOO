@@ -1,198 +1,37 @@
 [
     {
         "id": 1,
-        "content": "AAAAAAAAAAAA",
-        "timestamp": "2025-02-16 10:50:41",
-        "sender_id": 4,
+        "content": "asd",
+        "timestamp": "2025-02-27 09:47:50",
+        "sender_id": 2,
         "group_id": 1
     },
     {
         "id": 2,
-        "content": "aa",
-        "timestamp": "2025-02-16 10:50:44",
-        "sender_id": 4,
+        "content": "Oi afonso",
+        "timestamp": "2025-02-27 09:47:57",
+        "sender_id": 1,
         "group_id": 1
     },
     {
         "id": 3,
-        "content": "a",
-        "timestamp": "2025-02-16 10:50:44",
-        "sender_id": 4,
+        "content": "Teste",
+        "timestamp": "2025-02-27 09:55:47",
+        "sender_id": 2,
         "group_id": 1
     },
     {
         "id": 4,
-        "content": "a",
-        "timestamp": "2025-02-16 10:50:45",
-        "sender_id": 4,
+        "content": "Oi oi",
+        "timestamp": "2025-02-27 09:55:49",
+        "sender_id": 2,
         "group_id": 1
-    },
-    {
-        "id": 6,
-        "content": "a",
-        "timestamp": "2025-02-16 10:50:46",
-        "sender_id": 4,
-        "group_id": 1
-    },
-    {
-        "id": 7,
-        "content": "KKKKK FUNCIONA NEM ACREDITO",
-        "timestamp": "2025-02-16 10:50:53",
-        "sender_id": 4,
-        "group_id": 1
-    },
-    {
-        "id": 8,
-        "content": "efgsdeg",
-        "timestamp": "2025-02-17 08:53:37",
-        "sender_id": 7,
-        "group_id": 3
-    },
-    {
-        "id": 9,
-        "content": "dfsd",
-        "timestamp": "2025-02-17 08:53:38",
-        "sender_id": 7,
-        "group_id": 3
-    },
-    {
-        "id": 10,
-        "content": "dfsd",
-        "timestamp": "2025-02-17 08:53:39",
-        "sender_id": 7,
-        "group_id": 3
-    },
-    {
-        "id": 11,
-        "content": "fdsfsad",
-        "timestamp": "2025-02-17 08:53:40",
-        "sender_id": 7,
-        "group_id": 3
-    },
-    {
-        "id": 12,
-        "content": "safdasf",
-        "timestamp": "2025-02-17 08:53:40",
-        "sender_id": 7,
-        "group_id": 3
-    },
-    {
-        "id": 13,
-        "content": "afsafa",
-        "timestamp": "2025-02-17 08:53:41",
-        "sender_id": 7,
-        "group_id": 3
-    },
-    {
-        "id": 14,
-        "content": "asf",
-        "timestamp": "2025-02-17 08:53:41",
-        "sender_id": 7,
-        "group_id": 3
-    },
-    {
-        "id": 15,
-        "content": "asfsa",
-        "timestamp": "2025-02-17 08:53:42",
-        "sender_id": 7,
-        "group_id": 3
-    },
-    {
-        "id": 16,
-        "content": "fasaf",
-        "timestamp": "2025-02-17 08:53:42",
-        "sender_id": 7,
-        "group_id": 3
-    },
-    {
-        "id": 17,
-        "content": "asf",
-        "timestamp": "2025-02-17 08:53:43",
-        "sender_id": 7,
-        "group_id": 3
-    },
-    {
-        "id": 18,
-        "content": "as",
-        "timestamp": "2025-02-17 08:53:43",
-        "sender_id": 7,
-        "group_id": 3
-    },
-    {
-        "id": 19,
-        "content": "fasf",
-        "timestamp": "2025-02-17 08:53:44",
-        "sender_id": 7,
-        "group_id": 3
-    },
-    {
-        "id": 20,
-        "content": "rhtedjjoasf",
-        "timestamp": "2025-02-17 08:53:45",
-        "sender_id": 7,
-        "group_id": 3
-    },
-    {
-        "id": 21,
-        "content": "jsaegikhj",
-        "timestamp": "2025-02-17 08:53:46",
-        "sender_id": 7,
-        "group_id": 3
-    },
-    {
-        "id": 22,
-        "content": "dajkbakdjf",
-        "timestamp": "2025-02-17 08:53:47",
-        "sender_id": 7,
-        "group_id": 3
-    },
-    {
-        "id": 23,
-        "content": "BANAAN",
-        "timestamp": "2025-02-17 08:53:49",
-        "sender_id": 7,
-        "group_id": 3
-    },
-    {
-        "id": 24,
-        "content": "feagouisaif",
-        "timestamp": "2025-02-23 18:09:17",
-        "sender_id": 7,
-        "group_id": 3
-    },
-    {
-        "id": 25,
-        "content": "ioedg",
-        "timestamp": "2025-02-23 18:09:18",
-        "sender_id": 7,
-        "group_id": 3
-    },
-    {
-        "id": 26,
-        "content": "MENSAGEM HAHAHA\n",
-        "timestamp": "2025-02-23 18:09:24",
-        "sender_id": 7,
-        "group_id": 3
-    },
-    {
-        "id": 27,
-        "content": "dddddddddddddddd",
-        "timestamp": "2025-02-23 18:14:46",
-        "sender_id": 5,
-        "group_id": 3
-    },
-    {
-        "id": 28,
-        "content": "dddddddddddddddd",
-        "timestamp": "2025-02-23 18:15:53",
-        "sender_id": 5,
-        "group_id": 3
     },
     {
         "id": 5,
-        "content": "Mensagem atualizada",
-        "timestamp": "2025-02-16 10:50:45",
-        "sender_id": 4,
+        "content": "oi oi oi",
+        "timestamp": "2025-02-27 09:56:18",
+        "sender_id": 1,
         "group_id": 1
     }
 ]

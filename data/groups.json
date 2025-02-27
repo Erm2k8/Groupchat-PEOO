@@ -1,46 +1,21 @@
 [
     {
         "id": 1,
-        "group_name": "Grupo Teste",
+        "group_name": "Paysandu Oliveira",
         "members": [
             {
-                "id": 25,
+                "id": 1,
                 "group_id": 1,
-                "user_id": 4,
+                "user_id": 1,
+                "permissions": 3
+            },
+            {
+                "id": 2,
+                "group_id": 1,
+                "user_id": 2,
                 "permissions": 3
             }
         ],
-        "description": "Descricao legal"
-    },
-    {
-        "id": 3,
-        "group_name": "Grupo paia",
-        "members": [
-            {
-                "id": 22,
-                "group_id": 3,
-                "user_id": 7,
-                "permissions": 3
-            },
-            {
-                "id": 23,
-                "group_id": 3,
-                "user_id": 5,
-                "permissions": 3
-            },
-            {
-                "id": 24,
-                "group_id": 3,
-                "user_id": 8,
-                "permissions": 3
-            },
-            {
-                "id": 26,
-                "group_id": 3,
-                "user_id": 4,
-                "permissions": 3
-            }
-        ],
-        "description": "paia demaize"
+        "description": "Resenha demais nesse grupo do balacobaco"
     }
 ]

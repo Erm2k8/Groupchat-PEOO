@@ -4,6 +4,7 @@ from ui.components.admin import AdminUI
 from ui.components.sidebar import Sidebar
 from ui.components.group import Groups
 from ui.components.auth import Auth
+from ui.components.explore import Explore
 
 class Index:
     @staticmethod
@@ -22,7 +23,7 @@ class Index:
                         Style.padding__adjust_render()
                         Groups.render_group(st.session_state.selected_group)
                     else:
-                        st.write("Select a group to get started.")
+                        Explore.search()
                 else:
                     st.title("Admin page")
                     AdminUI.render()

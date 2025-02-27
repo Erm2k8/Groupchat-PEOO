@@ -39,8 +39,6 @@ class AdminUI:
                 AdminUI.groups_page()
             case "Mensagens":
                 AdminUI.messages_page()
-            case "Notificações":
-                AdminUI.notifications_page()
             case "Membros":
                 AdminUI.members_page()
             case _:
@@ -88,43 +86,54 @@ class AdminUI:
             name = st.selectbox(
                 "Escolher usuário",
                 [user.username for user in View.list_users()],
-                key="update_user_select"  # Key única
+                key="update_user_select" 
             )
-            user_id = View.get_user_by_name(name).id
-            name = st.text_input(
-                            "Novo nome",
-                            key="update_name",
-                            value=View.get_user_by_id(user_id).username
-                        )
-            email = st.text_input(
-                            "Novo e-mail",
-                            key="update_email",
-                            value=View.get_user_by_id(user_id).email
-                        )
-            password = st.text_input(
-                            "Nova senha",
-                            type="password",
-                            key="update_password",
-                            value=View.get_user_by_id(user_id).password
-                        )
-            if st.button("Update"):
-                View.update_user(user_id, name, email, password)
-                st.success("User updated!")
-                sleep(2)
-                st.rerun()
+            user_id = View.get_user_by_name(name)
+            if user_id is None:
+                st.error("User not found.")
+            else:
+                user_id = user_id.id
+                name = st.text_input(
+                                "Novo nome",
+                                key="update_name",
+                                value=View.get_user_by_id(user_id).username
+                            )
+                email = st.text_input(
+                                "Novo e-mail",
+                                key="update_email",
+                                value=View.get_user_by_id(user_id).email
+                            )
+                password = st.text_input(
+                                "Nova senha",
+                                type="password",
+                                key="update_password",
+                                value=View.get_user_by_id(user_id).password
+                            )
+                if st.button("Update"):
+                    View.update_user(user_id, name, email, password)
+                    st.success("User updated!")
+                    sleep(2)
+                    st.rerun()
 
         with delete:
             name = st.selectbox(
                 "Escolher usuário",
                 [user.username for user in View.list_users()],
-                key="delete_user_select"  # Key única
+                key="delete_user_select"  
             )
-            user_id = View.get_user_by_name(name).id
-            if st.button("Delete"):
-                View.delete_user(user_id)
-                st.success("User deleted!")
-                sleep(2)
-                st.rerun()
+
+            user_id = View.get_user_by_name(name)
+
+            if user_id is None:
+                st.error("Usuário não encontrado.")
+            else:
+                user_id = user_id.id
+
+                if st.button("Delete"):
+                    View.delete_user(user_id)
+                    st.success("User deleted!")
+                    sleep(2)
+                    st.rerun()
 
     @staticmethod
     def groups_page():
@@ -430,55 +439,40 @@ class AdminUI:
                 st.warning("Nenhum membro encontrado.")
 
         with update:
-            id = st.number_input(
-                "ID",
-                key="update_member_id",
-                min_value=0,
-                step=1,
-                format="%d"
+            group = st.selectbox(
+                "Group",
+                [group.group_name for group in View.list_groups()],
+                key="select_group_member_update"
             )
 
-            member = View.get_member_by_id(id)
+            user = st.selectbox(
+                "User",
+                [View.get_user_by_id(user.id).username for user in View.list_users() if View.get_user_by_id(user.id).id in [member.user_id for member in View.list_members()]],
+                key="select_user_member_update"
+            )
+
+            group_id = View.get_group_by_name(group).id
+            user_id = View.get_user_by_name(user).id
+
+            member = View.get_member_by_user_and_group(user_id, group_id)
 
             if member:
-                user = View.get_user_by_id(member.user_id)
-                group = View.get_group_by_id(member.group_id) if member.group_id else None
-
                 with st.container(border=True):
-                    st.write(f"ID: {member.id}")
-                    st.write(f"User: {user.username if user else 'Usuário não encontrado'}")
-                    st.write(f"Group: {group.group_name if group else 'Grupo não encontrado'}")
+                    st.write(f"""
+                        User: {View.get_user_by_id(member.user_id).username}\n
+                        Group: {View.get_group_by_id(member.group_id).group_name}\n
+                        Permission: {member.permissions}
+                    """)
 
-                user_name = st.selectbox(
-                    "User",
-                    [View.get_user_by_id(user.id).username for user in View.list_users()],
-                    key="select_user_member_update"
-                )
-
-                group_name = st.selectbox(
-                    "Group",
-                    [group.group_name for group in View.list_groups()],
-                    key="select_group_member_update"
-                )
-
-                current_permissions = member.permissions if member.permissions else Permission(0)  # Caso não tenha permissões
-                selected_permissions = st.multiselect(
-                    "Permissions",
+                permissions = st.multiselect(
+                    "Permission",
                     [perm.name for perm in Permission],
-                    default=[perm.name for perm in Permission if perm in current_permissions],
-                    key="select_permissions_member_update"
+                    default=[perm.name for perm in member.permissions],
+                    key="select_permission_member_update"
                 )
 
                 if st.button("Update"):
-                    user_id = View.get_user_by_name(user_name).id
-                    group_id = View.get_group_by_name(group_name).id if group_name else None
-
-                    # Combina todas as permissões selecionadas em um único valor
-                    permissions = Permission(0)  # Inicializa com nenhuma permissão
-                    for perm in selected_permissions:
-                        permissions |= getattr(Permission, perm)
-
-                    View.update_member(id, user_id, group_id, permissions)
+                    View.update_member(member.id, permissions)
                     st.success("Member updated!")
                     sleep(2)
                     st.rerun()

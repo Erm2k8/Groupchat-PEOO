@@ -166,6 +166,8 @@ class View:
 
     @staticmethod
     def delete_member(id):
+        member = MemberDAO.get_by_id(id)
+        View.remove_member_from_group(member.group_id, member.user_id)
         MemberDAO.delete(id)
     
     @staticmethod
@@ -173,3 +175,20 @@ class View:
         for member in MemberDAO.read_all():
             if member.group_id == group_id and member.user_id == user_id:
                 return member
+    
+    @staticmethod
+    def remove_member_from_group(group_id, user_id):
+        group_members = View.get_members_by_group(group_id)
+        for member in group_members:
+            group_members = [m for m in group_members if m.user_id != user_id]
+
+        group = View.get_group_by_id(group_id)
+        group.members = group_members
+        GroupDAO.update(group)
+
+    @staticmethod
+    def search_groups(search_string):
+        if search_string == "":
+            return GroupDAO.read_all()
+
+        return [group for group in GroupDAO.read_all() if search_string.lower() in group.group_name.lower()]
