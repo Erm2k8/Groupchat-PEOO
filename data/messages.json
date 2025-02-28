@@ -159,5 +159,19 @@
         "timestamp": "2025-02-28 09:36:41",
         "sender_id": 1,
         "group_id": 8
+    },
+    {
+        "id": 24,
+        "content": "EU CONSIGO VER",
+        "timestamp": "2025-02-28 10:10:01",
+        "sender_id": 2,
+        "group_id": 8
+    },
+    {
+        "id": 25,
+        "content": "ESSA VOCE NAO VE",
+        "timestamp": "2025-02-28 10:10:09",
+        "sender_id": 3,
+        "group_id": 8
     }
 ]

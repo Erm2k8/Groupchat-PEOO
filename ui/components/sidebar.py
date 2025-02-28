@@ -7,6 +7,7 @@ class Sidebar:
     def render():
         with st.sidebar:
             st.title("TriboPapo")
+            st.write('Logado como ' + View.get_user_by_id(st.session_state.user_id).username)
             explore = st.button("Explorar Tribos", use_container_width=True, type="primary", icon="🌎")
             create_group = st.button("Criar Grupo", use_container_width=True, type="secondary", icon="➕")
 
