@@ -64,5 +64,11 @@
         "group_id": 8,
         "user_id": 1,
         "permissions": 1
+    },
+    {
+        "id": 16,
+        "group_id": 7,
+        "user_id": 1,
+        "permissions": 3
     }
 ]

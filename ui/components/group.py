@@ -1,6 +1,8 @@
 import streamlit as st
 from views.views import View
 from models.members import Permission
+import pandas as pd
+import altair as alt
 
 class Groups:
     @staticmethod
@@ -58,7 +60,8 @@ class Groups:
             return
 
         with st.container(border=True):
-            st.write(f"Título: {group_name}")
+            if st.button("Dashboard"):
+                Groups.dashboard_group(group_name)
         with st.container(border=True):
             st.write(f"Descrição: {group.description}")
 
@@ -197,3 +200,34 @@ class Groups:
                 st.rerun()
             except Exception as e:
                 st.error(f"Erro ao atualizar o grupo: {e}")
+
+    @st.dialog("Mensagens por usuário", width="large")
+    @staticmethod
+    def dashboard_group(group_name: str):
+        group = View.get_group_by_name(group_name)
+
+        if not group:
+            st.error("Grupo não encontrado.")
+            return
+
+        messages = View.get_messages_by_group(group.id)
+
+        if not messages:
+            st.write("Nenhuma mensagem ainda.") 
+            return
+
+        user_message_counts = {}
+        for message in messages:
+            user = View.get_user_by_id(message.sender_id)
+            if user:
+                user_message_counts[user.username] = user_message_counts.get(user.username, 0) + 1
+
+        df = pd.DataFrame(list(user_message_counts.items()), columns=["Usuário", "Mensagens"])
+
+        chart = alt.Chart(df).mark_bar().encode(
+            x=alt.X("Usuário", sort="-y"),
+            y="Mensagens",
+            color=alt.Color("Usuário", scale=alt.Scale(scheme="category10"))
+        ).properties(title="Gráfico")
+
+        st.altair_chart(chart, use_container_width=True)
