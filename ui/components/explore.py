@@ -1,5 +1,6 @@
 import streamlit as st
 from views.views import View
+import uuid
 
 class Explore:
     @staticmethod
@@ -27,8 +28,8 @@ class Explore:
         with groups_container:
             for group in filtered_groups:
                 with st.container(border=True):
-                    col1, col2 = st.columns([6, 1])
+                    col1, col2 = st.columns([5, 1])
                     with col1:
                         st.markdown(f"#### {group.group_name}")
                     with col2:
-                        st.button("Pedir pra entrar", key=f"join_{group.group_name}", use_container_width=True)
+                        st.button("Entrar", key=str(uuid.uuid4()), use_container_width=True)

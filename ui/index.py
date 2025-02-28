@@ -20,6 +20,7 @@ class Index:
                 if not st.session_state.authenticated_is_admin:
                     Sidebar.render()  
                     if st.session_state.selected_group != "explore":
+                        Style.padding_adjust_render()
                         Groups.render_group(st.session_state.selected_group)
                     else:
                         Explore.search()

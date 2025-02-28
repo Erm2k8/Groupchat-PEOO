@@ -23,5 +23,5 @@ class Style:
         st.markdown(cls.global_style, unsafe_allow_html=True)
 
     @classmethod
-    def padding__adjust_render(cls):
+    def padding_adjust_render(cls):
         st.markdown(cls.padding_adjustment, unsafe_allow_html=True)

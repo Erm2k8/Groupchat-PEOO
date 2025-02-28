@@ -6,7 +6,7 @@ from crud.users_dao import UserDAO
 from crud.groups_dao import GroupDAO
 from crud.messages_dao import MessageDAO
 from crud.members_dao import MemberDAO
-
+from models.members import Permission
 from datetime import datetime
 
 class View:
@@ -69,11 +69,13 @@ class View:
         return GroupDAO.get_by_id(id)
 
     @staticmethod
-    def create_group(name, description, list_members = []):
+    def create_group(name, description, list_members=None):
+        if list_members is None:
+            list_members = []
         group = Group(0, name, [], description)
         GroupDAO.create(group)
         group.members = [m for m in View.read_all_members() if m.group_id == group.id]
-        GroupDAO.update(group) 
+        GroupDAO.update(group)
 
     @staticmethod
     def update_group(id, name, description):
@@ -89,7 +91,7 @@ class View:
         return MemberDAO.read_all()
 
     @staticmethod
-    def add_member(group_id, user_id, permissions):
+    def add_member(group_id, user_id, permissions=Permission.read_messages | Permission.send_messages):
         group = View.get_group_by_id(group_id)
         if not group:
             raise ValueError(f"Group with ID {group_id} not found.")
@@ -110,7 +112,7 @@ class View:
         if not group:
             raise ValueError(f"Group with ID {group_id} not found.")
         
-        group.members = [m for m in group.members if m['user_id'] != user_id]
+        group.members = [m for m in group.members if m.user_id != user_id]
         GroupDAO.update(group)
 
     @staticmethod
@@ -179,8 +181,7 @@ class View:
     @staticmethod
     def remove_member_from_group(group_id, user_id):
         group_members = View.get_members_by_group(group_id)
-        for member in group_members:
-            group_members = [m for m in group_members if m.user_id != user_id]
+        group_members = [m for m in group_members if m.user_id != user_id]
 
         group = View.get_group_by_id(group_id)
         group.members = group_members
@@ -192,3 +193,21 @@ class View:
             return GroupDAO.read_all()
 
         return [group for group in GroupDAO.read_all() if search_string.lower() in group.group_name.lower()]
+    
+    @staticmethod
+    def add_members_to_group(group_name, members_ids, admin=False):
+        group = View.get_group_by_name(group_name)
+        if not group:
+            raise ValueError(f"Group with name {group_name} not found.")
+        
+        if admin:
+            for member_id in members_ids:
+                View.add_member(group.id, member_id, Permission.ALL)
+            return
+        
+        for member_id in members_ids:
+            member = View.get_member_by_user_and_group(member_id, group.id)
+            if not member:
+                View.add_member(group.id, member_id, Permission.read_messages | Permission.send_messages)
+            else:
+                View.update_member(member.id, group.id, member_id, Permission.read_messages | Permission.send_messages)
