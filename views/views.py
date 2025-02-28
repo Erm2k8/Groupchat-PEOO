@@ -22,9 +22,21 @@ class View:
         UserDAO.create(user)
 
     @staticmethod
-    def update_user(id, name, email, password):
-        user = User(id, name, email, password)
+    @staticmethod
+    def update_user(id, name=None, email=None, password=None):
+        user = UserDAO.get_by_id(id)
+        if not user:
+            raise ValueError("Usuário não encontrado.")
+
+        if name:
+            user.username = name
+        if email:
+            user.email = email
+        if password:
+            user.password = password  
+        
         UserDAO.update(user)
+
 
     @staticmethod
     def delete_user(id):
@@ -220,3 +232,10 @@ class View:
         if group:
             group.members = [m for m in group.members if m['user_id'] != user_id]
             GroupDAO.update(group)
+
+    @staticmethod
+    def verify_password(user_id, password):
+        user = View.get_user_by_id(user_id)
+        if not user:
+            return False
+        return user.password == password 

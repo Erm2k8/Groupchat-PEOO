@@ -1,6 +1,7 @@
 import streamlit as st
 from views.views import View
 from ui.components.group import Groups
+from ui.components.user import UserUI
 
 class Sidebar:
     @staticmethod
@@ -32,6 +33,10 @@ class Sidebar:
                 st.write("Você ainda não participa de nenhum grupo.")
             
             st.divider()
-            if st.button("Logout"):
+
+            if st.button("Editar perfil"):
+                UserUI.edit_profile()
+
+            if st.button("Sair"):
                 st.session_state.clear()
                 st.rerun()

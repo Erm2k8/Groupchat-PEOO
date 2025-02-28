@@ -12,15 +12,15 @@
         "password": "1234"
     },
     {
-        "id": 3,
-        "username": "Gilbert",
-        "email": "gil@email.com",
-        "password": "1234"
-    },
-    {
         "id": 4,
         "username": "Lucas",
         "email": "Lucas@email.com",
         "password": "1"
+    },
+    {
+        "id": 3,
+        "username": "Gilberto",
+        "email": "gilberto@email.com",
+        "password": "1234"
     }
 ]
