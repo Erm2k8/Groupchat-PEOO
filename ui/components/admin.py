@@ -31,7 +31,7 @@ class AdminUI:
 
     @staticmethod
     def render_page():
-        Style.padding__adjust_render()
+        Style.padding_adjust_render()
         match st.session_state.admin_selected_page:
             case "Usuários":
                 AdminUI.users_page()

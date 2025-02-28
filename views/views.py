@@ -1,12 +1,11 @@
 from models.users import User
 from models.groups import Group
 from models.messages import Message
-from models.members import Member
+from models.members import Member, Permission
 from crud.users_dao import UserDAO
 from crud.groups_dao import GroupDAO
 from crud.messages_dao import MessageDAO
 from crud.members_dao import MemberDAO
-from models.members import Permission
 from datetime import datetime
 
 class View:
@@ -102,18 +101,18 @@ class View:
         GroupDAO.update(group)  
 
     @staticmethod
-    def remove_member(group_id, user_id):
-        for member in MemberDAO.read_all():
-            if member.group_id == group_id and member.user_id == user_id:
-                MemberDAO.delete(member.id)
-                break
-
-        group = View.get_group_by_id(group_id)
-        if not group:
-            raise ValueError(f"Group with ID {group_id} not found.")
+    def remove_member_from_group(group_id, user_id):
+        """
+        Remove um membro de um grupo.
+        """
+        member = View.get_member_by_user_and_group(user_id, group_id)
+        if member:
+            MemberDAO.delete(member.id)
         
-        group.members = [m for m in group.members if m.user_id != user_id]
-        GroupDAO.update(group)
+        group = View.get_group_by_id(group_id)
+        if group:
+            group.members = [m for m in group.members if m.user_id != user_id]
+            GroupDAO.update(group)
 
     @staticmethod
     def get_members_by_group(group_id):
@@ -122,6 +121,16 @@ class View:
     @staticmethod
     def get_member_by_id(id):
         return MemberDAO.get_by_id(id)
+
+    @staticmethod
+    def get_member_by_user_and_group(user_id, group_id):
+        """
+        Retorna o membro com base no user_id e group_id.
+        """
+        for member in MemberDAO.read_all():
+            if member.user_id == user_id and member.group_id == group_id:
+                return member
+        return None
 
     @staticmethod
     def list_messages():
@@ -146,7 +155,7 @@ class View:
 
     @staticmethod
     def leave_group(user_id, group_id):
-        View.remove_member(group_id, user_id)
+        View.remove_member_from_group(group_id, user_id)
 
     @staticmethod
     def update_message(id, content):
@@ -159,12 +168,14 @@ class View:
         return MemberDAO.read_all()
     
     @staticmethod
-    def update_member(id, group_id, user_id, permissions):
-        member = MemberDAO.get_by_id(id)
-        member.group_id = group_id
-        member.user_id = user_id
-        member.permissions = permissions
-        MemberDAO.update(member)
+    def update_member_permissions(member_id, permissions):
+        """
+        Atualiza as permissões de um membro.
+        """
+        member = MemberDAO.get_by_id(member_id)
+        if member:
+            member.permissions = permissions
+            MemberDAO.update(member)
 
     @staticmethod
     def delete_member(id):
@@ -172,21 +183,6 @@ class View:
         View.remove_member_from_group(member.group_id, member.user_id)
         MemberDAO.delete(id)
     
-    @staticmethod
-    def get_member_by_user_and_group(user_id, group_id):
-        for member in MemberDAO.read_all():
-            if member.group_id == group_id and member.user_id == user_id:
-                return member
-    
-    @staticmethod
-    def remove_member_from_group(group_id, user_id):
-        group_members = View.get_members_by_group(group_id)
-        group_members = [m for m in group_members if m.user_id != user_id]
-
-        group = View.get_group_by_id(group_id)
-        group.members = group_members
-        GroupDAO.update(group)
-
     @staticmethod
     def search_groups(search_string):
         if search_string == "":
@@ -211,3 +207,8 @@ class View:
                 View.add_member(group.id, member_id, Permission.read_messages | Permission.send_messages)
             else:
                 View.update_member(member.id, group.id, member_id, Permission.read_messages | Permission.send_messages)
+
+    @staticmethod
+    def is_user_group_admin(user_id, group_id):
+        member = View.get_member_by_user_and_group(user_id, group_id)
+        return member and member.permissions == Permission.ALL

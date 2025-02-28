@@ -12,12 +12,6 @@
         "permissions": 3
     },
     {
-        "id": 3,
-        "group_id": 6,
-        "user_id": 2,
-        "permissions": 3
-    },
-    {
         "id": 4,
         "group_id": 6,
         "user_id": 3,
@@ -36,21 +30,9 @@
         "permissions": 63
     },
     {
-        "id": 7,
-        "group_id": 8,
-        "user_id": 2,
-        "permissions": 3
-    },
-    {
         "id": 8,
         "group_id": 8,
         "user_id": 4,
-        "permissions": 3
-    },
-    {
-        "id": 9,
-        "group_id": 8,
-        "user_id": 1,
         "permissions": 3
     },
     {
@@ -58,5 +40,11 @@
         "group_id": 8,
         "user_id": 3,
         "permissions": 63
+    },
+    {
+        "id": 7,
+        "group_id": 8,
+        "user_id": 2,
+        "permissions": 3
     }
 ]
