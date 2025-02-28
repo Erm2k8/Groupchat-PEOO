@@ -119,9 +119,14 @@ class Groups:
         else:
             st.write("Sem membros ainda.")
 
+        with st.container(border=True):
+                if st.button("Editar grupo"):
+                    Groups.edit_group(group.group_name)
+
     @st.dialog("Criar grupo", width="large")
     @staticmethod
     def create_group():
+
         group_name = st.text_input("Nome do grupo")
         description = st.text_input("Descrição do grupo")
         members = st.multiselect(
@@ -154,3 +159,41 @@ class Groups:
                 st.rerun()
             except Exception as e:
                 st.error(f"Erro ao criar o grupo: {e}")
+
+
+    @st.dialog("Editar grupo", width="large")
+    @staticmethod
+    def edit_group(group_name: str):
+        group = View.get_group_by_name(group_name)
+
+        if not group:
+            st.error("Grupo não encontrado.")
+            return
+
+        is_admin = any(
+            member['user_id'] == st.session_state.user_id and member['permissions'] == Permission.ALL
+            for member in group.members
+        )
+
+        if not is_admin:
+            st.warning("Apenas administradores podem editar o grupo.")
+            return
+
+        new_group_name = st.text_input("Novo nome do grupo", value=group.group_name)
+        new_description = st.text_area("Nova descrição", value=group.description)
+
+        if st.button("Salvar alterações"):
+            if not new_group_name:
+                st.error("O nome do grupo é obrigatório.")
+                return
+
+            if new_group_name != group.group_name and new_group_name in [g.group_name for g in View.list_groups()]:
+                st.error("Já existe um grupo com esse nome.")
+                return
+
+            try:
+                View.update_group(group.id, new_group_name, new_description)
+                st.success("Grupo atualizado com sucesso!")
+                st.rerun()
+            except Exception as e:
+                st.error(f"Erro ao atualizar o grupo: {e}")
