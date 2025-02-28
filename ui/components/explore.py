@@ -32,4 +32,8 @@ class Explore:
                     with col1:
                         st.markdown(f"#### {group.group_name}")
                     with col2:
-                        st.button("Entrar", key=str(uuid.uuid4()), use_container_width=True)
+                        is_member = st.session_state.user_id in [member['user_id'] for member in group.members]
+                        if not is_member:
+                            if st.button("Entrar", key=f"join_{group.id}", use_container_width=True):
+                                View.add_member(group.id, st.session_state.user_id)
+                                st.rerun()

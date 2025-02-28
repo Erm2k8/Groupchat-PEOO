@@ -111,7 +111,7 @@ class View:
         
         group = View.get_group_by_id(group_id)
         if group:
-            group.members = [m for m in group.members if m.user_id != user_id]
+            group.members = [m for m in group.members if m['user_id'] != user_id]
             GroupDAO.update(group)
 
     @staticmethod
@@ -124,9 +124,6 @@ class View:
 
     @staticmethod
     def get_member_by_user_and_group(user_id, group_id):
-        """
-        Retorna o membro com base no user_id e group_id.
-        """
         for member in MemberDAO.read_all():
             if member.user_id == user_id and member.group_id == group_id:
                 return member
@@ -212,3 +209,14 @@ class View:
     def is_user_group_admin(user_id, group_id):
         member = View.get_member_by_user_and_group(user_id, group_id)
         return member and member.permissions == Permission.ALL
+    
+    @staticmethod
+    def leave_group(user_id, group_id):
+        member = View.get_member_by_user_and_group(user_id, group_id)
+        if member:
+            MemberDAO.delete(member.id)
+        
+        group = View.get_group_by_id(group_id)
+        if group:
+            group.members = [m for m in group.members if m['user_id'] != user_id]
+            GroupDAO.update(group)

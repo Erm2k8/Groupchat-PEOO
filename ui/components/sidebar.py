@@ -14,22 +14,23 @@ class Sidebar:
                 Groups.create_group()
 
             st.divider()
-            st.write("Your Groups")
-            
+            st.write("Seus Grupos")
+
             groups = View.list_groups()
+            user_groups = [group for group in groups if st.session_state.user_id in [member['user_id'] for member in group.members]]
             
             if explore:
                 st.session_state.selected_group = "explore"
-            if groups:
-                for group in groups:
-                    if group.members:
-                        if st.session_state.user_id in [member['user_id'] for member in group.members]:
-                            group_button = st.button(group.group_name, use_container_width=True)
-                            if group_button:
-                                st.session_state.selected_group = group.group_name
-                                st.rerun()
+            if user_groups:
+                for group in user_groups:
+                    group_button = st.button(group.group_name, use_container_width=True)
+                    if group_button:
+                        st.session_state.selected_group = group.group_name
+                        st.rerun()
             else:
-                st.write("No groups found.")
+                st.write("Você ainda não participa de nenhum grupo.")
             
             st.divider()
-            st.button("Logout", on_click=lambda: st.session_state.clear())
+            if st.button("Logout"):
+                st.session_state.clear()
+                st.rerun()

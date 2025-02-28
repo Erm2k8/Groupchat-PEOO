@@ -54,37 +54,37 @@ class Groups:
                     with col1:
                         st.markdown('- ' + View.get_user_by_id(member.user_id).username)
                     with col2:
-                        if user_is_admin and member.user_id != st.session_state.user_id:
+                        if user_is_admin and member['user_id'] != st.session_state.user_id:
                             with st.popover(""):
-                                if st.button(f"Remover {View.get_user_by_id(member.user_id).username} do grupo", key=f"remove_{member.user_id}"):
-                                    View.remove_member_from_group(group.id, member.user_id)
+                                if st.button(f"Remover {View.get_user_by_id(member['user_id']).username} do grupo", key=f"remove_{member['user_id']}"):
+                                    View.remove_member_from_group(group.id, member['user_id'])
                                     st.rerun()
                                 
-                                is_member_admin = member.permissions == Permission.ALL
+                                is_member_admin = member['permissions'] == Permission.ALL
                                 
                                 if is_member_admin:
-                                    if st.button(f"Remover admin {View.get_user_by_id(member.user_id).username}", key=f"remove_admin_{member.user_id}"):
-                                        View.update_member_permissions(member.id, Permission.read_messages | Permission.send_messages)
+                                    if st.button(f"Remover admin {View.get_user_by_id(member['user_id']).username}", key=f"remove_admin_{member['user_id']}"):
+                                        View.update_member_permissions(member['id'], Permission.read_messages | Permission.send_messages)
                                         st.rerun()
                                 
                                 st.write("Permissões:")
                                 can_read = st.checkbox(
                                     "Ler mensagens",
-                                    value=bool(member.permissions & Permission.read_messages),
-                                    key=f"read_{member.user_id}"
+                                    value=bool(member['permissions'] & Permission.read_messages),
+                                    key=f"read_{member['user_id']}"
                                 )
                                 can_send = st.checkbox(
                                     "Enviar mensagens",
-                                    value=bool(member.permissions & Permission.send_messages),
-                                    key=f"send_{member.user_id}"
+                                    value=bool(member['permissions'] & Permission.send_messages),
+                                    key=f"send_{member['user_id']}"
                                 )
                                 can_admin = st.checkbox(
                                     "Administrar",
                                     value=is_member_admin,
-                                    key=f"admin_{member.user_id}"
+                                    key=f"admin_{member['user_id']}"
                                 )
 
-                                if st.button(f"Salvar permissões para {View.get_user_by_id(member.user_id).username}", key=f"save_permissions_{member.user_id}"):
+                                if st.button(f"Salvar permissões para {View.get_user_by_id(member['user_id']).username}", key=f"save_permissions_{member['user_id']}"):
                                     new_permissions = Permission(0)
                                     if can_read:
                                         new_permissions |= Permission.read_messages
@@ -92,8 +92,14 @@ class Groups:
                                         new_permissions |= Permission.send_messages
                                     if can_admin:
                                         new_permissions = Permission.ALL
-                                    View.update_member_permissions(member.id, new_permissions)
+                                    View.update_member_permissions(member['id'], new_permissions)
                                     st.rerun()
+
+                if member.user_id == st.session_state.user_id:
+                    if st.button("Sair do Grupo", key=f"leave_{member.user_id}"):
+                        View.leave_group(member.user_id, group.id)
+                        st.session_state.selected_group = "explore"
+                        st.rerun()
         else:
             st.write("Sem membros ainda.")
 
